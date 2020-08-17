@@ -1,0 +1,19 @@
+Stored Procedure
+
+create proc proc_TicketDetails(@BookingID int)
+as
+begin
+Select * from Ticket
+where BookingUserID = @BookingID AND FromDate >GETDATE() AND TicketBookingStatus = 1 
+end
+
+exec proc_TicketDetails 1001
+
+WEB API Code
+
+[HttpPost]
+        public object TicketPrint(Ticket ticket)
+        {
+            var count = db.proc_TicketDetails(ticket.BookingUserID);
+            return count;
+	}
